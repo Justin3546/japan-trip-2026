@@ -10,12 +10,55 @@ For HEIC → JPEG conversion (iPhone default format), use ImageMagick:
 ```
 magick input.heic output.jpg
 ```
-If `magick` isn't installed, fall back to `convert input.heic output.jpg`, or install with `apt-get install -y imagemagick libheif1` if neither is present. Most attached photos will already be JPEG once iOS hands them through the Claude app, so check the file extension before converting.
+If `magick` isn't installed, fall back to `convert input.heic output.jpg`, or install with `sudo apt-get install -y imagemagick libheif1` if neither is present (the cloud sandbox usually needs this on first use). Most attached photos arrive as JPEG once iOS hands them through the Claude app, so check the media type before converting.
+
+## Where Justin's photos actually are
+
+When Justin attaches photos in the Claude mobile app, they do **not** appear as files on disk. They're embedded as base64 inside the session transcript JSONL at:
+
+```
+/root/.claude/projects/-home-user-japan-trip-2026/<session-uuid>.jsonl
+```
+
+(That path is `~/.claude/projects/` + the cwd with `/` replaced by `-`.) Each user message has a `.message.content` array containing `{type:"image", source:{type:"base64", media_type:"image/jpeg"|"image/heic", data:"..."}}` blocks in the order he sent them. There's typically one `.jsonl` per session — pick the newest in the directory.
+
+To extract the photos from the most recent user message that has any images and save them with sequential names, run this from the repo root:
+
+```bash
+DAY=2  # set to the day number you're updating
+DEST="photos/day${DAY}"
+mkdir -p "$DEST"
+
+TRANSCRIPT=$(ls -t /root/.claude/projects/-home-user-japan-trip-2026/*.jsonl | head -1)
+TMP=$(mktemp -d)
+jq -c 'select(.type=="user" and (.message.content | type=="array") and ([.message.content[] | select(.type=="image")] | length > 0))' "$TRANSCRIPT" \
+  | tail -1 > "$TMP/msg.json"
+
+N=$(jq '[.message.content[] | select(.type=="image")] | length' "$TMP/msg.json")
+for i in $(seq 1 "$N"); do
+  idx=$((i-1))
+  mt=$(jq -r ".message.content | map(select(.type==\"image\")) | .[$idx].source.media_type" "$TMP/msg.json")
+  ext=${mt#image/}; [ "$ext" = "jpeg" ] && ext=jpg
+  jq -r ".message.content | map(select(.type==\"image\")) | .[$idx].source.data" "$TMP/msg.json" \
+    | base64 -d > "$DEST/img${i}.${ext}"
+done
+rm -rf "$TMP"
+
+# Convert any HEIC/HEIF to JPEG and drop the originals
+for f in "$DEST"/*.heic "$DEST"/*.heif; do
+  [ -f "$f" ] || continue
+  convert "$f" "${f%.*}.jpg" && rm "$f"
+done
+
+ls -la "$DEST"
+```
+
+If Justin spreads photos across multiple messages in the same update ("oh, one more"), replace the `tail -1` with logic that takes every user message after the previous assistant turn — but his normal pattern is one message with all photos plus the caption.
 
 ## What you do when Justin sends a day's update
 
 1. **Identify the day** by date (e.g., "we just landed in Tokyo" → Day 2). Day numbers and dates are fixed in `index.html`.
-2. **Save photos** to `photos/dayN/` (create the directory). Name them `img1.jpg`, `img2.jpg`, ... in the order he sent them. See the Environment section above for HEIC conversion. Don't crop, rotate, or compress.
+2. **Extract and save photos** to `photos/dayN/` using the snippet in the section above. Files land as `img1.jpg`, `img2.jpg`, ... in the order he sent them. Don't crop, rotate, or recompress.
 3. **Mark the day complete** in `index.html` — three coordinated edits below.
 4. **Move the `.now-divider`** so it sits right before the first upcoming day.
 5. **Update the footer date** to today's date (Central Time): `TZ=America/Chicago date "+%B %d, %Y"`.
