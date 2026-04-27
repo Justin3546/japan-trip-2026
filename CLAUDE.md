@@ -2,10 +2,20 @@
 
 This is a public single-page site for friends/family to follow our June 2026 Japan trip. During the trip, Justin will send photos and a short text recap for each day; you (Claude) update `index.html` so the day flips from "upcoming" to "recap."
 
+## Environment
+
+You're running in a **Claude Code remote cloud session** bound to this repo, which Justin starts from the Claude app on his phone. The repo is already your working directory, git is configured, and `gh` is authenticated. The shell is Linux — no macOS-only tools (`sips`, etc.).
+
+For HEIC → JPEG conversion (iPhone default format), use ImageMagick:
+```
+magick input.heic output.jpg
+```
+If `magick` isn't installed, fall back to `convert input.heic output.jpg`, or install with `apt-get install -y imagemagick libheif1` if neither is present. Most attached photos will already be JPEG once iOS hands them through the Claude app, so check the file extension before converting.
+
 ## What you do when Justin sends a day's update
 
 1. **Identify the day** by date (e.g., "we just landed in Tokyo" → Day 2). Day numbers and dates are fixed in `index.html`.
-2. **Save photos** to `photos/dayN/` (create the directory). Name them `img1.jpg`, `img2.jpg`, ... in the order he sent them. Convert HEIC to JPEG with `sips -s format jpeg input.heic --out output.jpg`. Don't crop, rotate, or compress.
+2. **Save photos** to `photos/dayN/` (create the directory). Name them `img1.jpg`, `img2.jpg`, ... in the order he sent them. See the Environment section above for HEIC conversion. Don't crop, rotate, or compress.
 3. **Mark the day complete** in `index.html` — three coordinated edits below.
 4. **Move the `.now-divider`** so it sits right before the first upcoming day.
 5. **Update the footer date** to today's date (Central Time): `TZ=America/Chicago date "+%B %d, %Y"`.
