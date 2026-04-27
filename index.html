@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<title>Japan 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  :root {
+    --white: #ffffff;
+    --bg: #f7f7f7;
+    --text-primary: #222222;
+    --text-secondary: #6a6a6a;
+    --text-tertiary: #929292;
+    --rausch: #ff385c;
+    --border: #dddddd;
+    --border-light: #ebebeb;
+    --surface: #f2f2f2;
+    --card-shadow: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
+    --tokyo: #4ea8de;
+    --osaka: #f9a03f;
+    --kyoto: #5eaa5e;
+    --flight: #ff385c;
+    --hiroshima: #9b6fbf;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', 'Noto Sans JP', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.43;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--white);
+    padding: 48px 64px 40px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.44px;
+    line-height: 1.2;
+  }
+  .hero h1 .flag { margin-right: 8px; }
+  .hero-meta {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  /* QUICK SUMMARY */
+  .summary-section {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-light);
+    padding: 24px 64px 28px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .summary-item:hover {
+    background: var(--surface);
+    transform: translateY(-1px);
+  }
+  .summary-item.complete {
+    background: #f0f0f0;
+    opacity: 0.65;
+  }
+  .summary-item.complete .summary-text { color: var(--text-secondary); }
+  .summary-item.complete::after {
+    content: "\2713";
+    margin-left: auto;
+    color: var(--text-tertiary);
+    font-weight: 700;
+    font-size: 13px;
+    align-self: center;
+  }
+  .summary-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .summary-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .summary-text .day-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 64px 80px;
+  }
+
+  /* DAY CARDS */
+  .day-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px 0;
+  }
+  .day-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .day-titles h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.18px;
+    line-height: 1.2;
+  }
+  .day-titles .day-date {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .day-city-tag {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: var(--white);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .day-body {
+    padding: 20px 32px 28px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border-light);
+    border-radius: 1px;
+  }
+  .tl-item {
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -19px;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .tl-item.highlight::before {
+    background: var(--rausch);
+    box-shadow: 0 0 0 3px rgba(255,56,92,0.15);
+  }
+  .tl-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+  }
+  .tl-desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .tl-desc strong {
+    font-weight: 600;
+  }
+  .tl-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* JOURNAL (added during/after the trip) */
+  .journal:empty { display: none; }
+  .journal {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border);
+  }
+  .journal .entry {
+    font-size: 14.5px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .journal .entry + .entry { margin-top: -4px; }
+  .journal .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .journal .gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--surface);
+    cursor: zoom-in;
+  }
+  .journal .gallery.wide {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .journal .gallery.wide img { aspect-ratio: 4 / 3; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: zoom-out;
+    padding: 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 24px 64px 40px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-light);
+    background: var(--white);
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 32px 20px 28px; }
+    .hero h1 { font-size: 26px; }
+    .summary-section { padding: 20px 20px 24px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .main { padding: 28px 16px 60px; }
+    .day-header { padding: 20px 20px 0; flex-wrap: wrap; }
+    .day-body { padding: 16px 20px 24px; }
+    .day-city-tag { margin-left: 0; }
+    .footer { padding: 24px 20px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <h1><span class="flag">&#127471;&#127477;</span>Japan 2026</h1>
+  <div class="hero-meta">June 1 &ndash; 10 &middot; Tokyo &rarr; Osaka &rarr; Kyoto &rarr; Tokyo</div>
+</div>
+
+<!-- QUICK SUMMARY -->
+<div class="summary-section">
+  <div class="summary-grid">
+    <a class="summary-item" href="#day-1"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 1 &middot; Mon Jun 1</span>Fly IAH &rarr; NRT</div></a>
+    <a class="summary-item" href="#day-2"><div class="summary-dot" style="background:var(--tokyo)"></div><div class="summary-text"><span class="day-label">Day 2 &middot; Tue Jun 2</span>Arrive Tokyo</div></a>
+    <a class="summary-item" href="#day-3"><div class="summary-dot" style="background:var(--tokyo)"></div><div class="summary-text"><span class="day-label">Day 3 &middot; Wed Jun 3</span>Shibuya &middot; Akihabara &middot; Shibuya Sky</div></a>
+    <a class="summary-item" href="#day-4"><div class="summary-dot" style="background:var(--tokyo)"></div><div class="summary-text"><span class="day-label">Day 4 &middot; Thu Jun 4</span>teamLab &middot; Asakusa &middot; Otter Cafe</div></a>
+    <a class="summary-item" href="#day-5"><div class="summary-dot" style="background:var(--osaka)"></div><div class="summary-text"><span class="day-label">Day 5 &middot; Fri Jun 5</span>Shinkansen &rarr; Osaka &middot; Dotonbori</div></a>
+    <a class="summary-item" href="#day-6"><div class="summary-dot" style="background:var(--osaka)"></div><div class="summary-text"><span class="day-label">Day 6 &middot; Sat Jun 6</span>Universal Studios Japan</div></a>
+    <a class="summary-item" href="#day-7"><div class="summary-dot" style="background:var(--kyoto)"></div><div class="summary-text"><span class="day-label">Day 7 &middot; Sun Jun 7</span>Kyoto &middot; Gion &middot; GEAR show</div></a>
+    <a class="summary-item" href="#day-8"><div class="summary-dot" style="background:var(--hiroshima)"></div><div class="summary-text"><span class="day-label">Day 8 &middot; Mon Jun 8</span>Fushimi Inari &middot; Hiroshima day trip</div></a>
+    <a class="summary-item" href="#day-9"><div class="summary-dot" style="background:var(--tokyo)"></div><div class="summary-text"><span class="day-label">Day 9 &middot; Tue Jun 9</span>Back to Tokyo &middot; Odaiba</div></a>
+    <a class="summary-item" href="#day-10"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 10 &middot; Wed Jun 10</span>Fly NRT &rarr; IAH</div></a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- DAY 1 -->
+<div class="day-card" id="day-1">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--flight)">D1</div>
+    <div class="day-titles">
+      <h2>Fly out</h2>
+      <div class="day-date">Monday, June 1</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--flight)">Flight</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">10:25 AM</div><div class="tl-desc"><strong>ZIPAIR ZG015</strong> &middot; Houston IAH &rarr; Tokyo Narita</div><div class="tl-note">14 hours nonstop across the Pacific</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-card" id="day-2">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--tokyo)">D2</div>
+    <div class="day-titles">
+      <h2>Arrive Tokyo</h2>
+      <div class="day-date">Tuesday, June 2</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--tokyo)">Tokyo</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">2:25 PM</div><div class="tl-desc"><strong>Land at Narita</strong></div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Skyliner</strong> to Nippori, then Yamanote Line to Ikebukuro</div></div>
+      <div class="tl-item"><div class="tl-time">Evening</div><div class="tl-desc">First dinner in Ikebukuro &middot; ramen, curry, or conveyor-belt sushi</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-card" id="day-3">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--tokyo)">D3</div>
+    <div class="day-titles">
+      <h2>Shibuya, Kiddy Land &amp; Shibuya Sky</h2>
+      <div class="day-date">Wednesday, June 3</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--tokyo)">Tokyo</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">Early morning</div><div class="tl-desc"><strong>Meiji Shrine</strong> &middot; quiet visit before crowds</div></div>
+      <div class="tl-item"><div class="tl-time">Late morning</div><div class="tl-desc"><strong>Shibuya</strong> &middot; Shibuya Crossing, Hachiko statue, Pok&eacute;mon Center Shibuya</div></div>
+      <div class="tl-item"><div class="tl-time">Midday</div><div class="tl-desc"><strong>Kiddy Land</strong> in Harajuku &middot; four floors of character goods</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Akihabara</strong> &middot; arcades, gachapon, Don Quijote, retro game shops</div></div>
+      <div class="tl-item highlight"><div class="tl-time">Sunset</div><div class="tl-desc"><strong>Shibuya Sky</strong> &middot; rooftop observation deck for the day-to-night transition</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 4 -->
+<div class="day-card" id="day-4">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--tokyo)">D4</div>
+    <div class="day-titles">
+      <h2>teamLab, Asakusa &amp; Otter Cafe</h2>
+      <div class="day-date">Thursday, June 4</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--tokyo)">Tokyo</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">10:00 AM</div><div class="tl-desc"><strong>teamLab Borderless</strong> at Azabudai Hills &middot; immersive digital art, includes EN Tea House</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Train to <strong>Asakusa</strong> &middot; lunch at Nakamise-dori food stalls</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Senso-ji Temple</strong> &amp; the Nakamise shopping street</div></div>
+      <div class="tl-item highlight"><div class="tl-time">Late afternoon</div><div class="tl-desc"><strong>Harry Asakusa Otter Cafe</strong> &middot; otters, hedgehogs, and meerkats</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 5 -->
+<div class="day-card" id="day-5">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--osaka)">D5</div>
+    <div class="day-titles">
+      <h2>Shinkansen to Osaka &amp; Dotonbori</h2>
+      <div class="day-date">Friday, June 5</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--osaka)">Osaka</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Shinkansen Tokyo &rarr; Shin-Osaka</strong> &middot; ~2.5 hours, first bullet train ride</div><div class="tl-note">Sit on the right side for Mt. Fuji views &middot; ekiben (train bento) for the journey</div></div>
+      <div class="tl-item"><div class="tl-time">Late afternoon</div><div class="tl-desc"><strong>Dotonbori</strong> &middot; Glico Running Man, neon canal, takoyaki and okonomiyaki street food</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 6 -->
+<div class="day-card" id="day-6">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--osaka)">D6</div>
+    <div class="day-titles">
+      <h2>Universal Studios Japan</h2>
+      <div class="day-date">Saturday, June 6</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--osaka)">Osaka</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">All day</div><div class="tl-desc"><strong>Universal Studios Japan</strong></div><div class="tl-note">Super Nintendo World, the Wizarding World of Harry Potter, Jurassic Park, and the big coasters</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 7 -->
+<div class="day-card" id="day-7">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--kyoto)">D7</div>
+    <div class="day-titles">
+      <h2>Kyoto &middot; Gion, Kiyomizu-dera &amp; GEAR</h2>
+      <div class="day-date">Sunday, June 7</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--kyoto)">Kyoto</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Train Osaka &rarr; Kyoto</strong> &middot; ~55 minutes via JR</div></div>
+      <div class="tl-item"><div class="tl-time">Midday</div><div class="tl-desc"><strong>Higashiyama walk</strong> &middot; the preserved wooden streets of Sannen-zaka, Ninnen-zaka, and Shimbashi</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Kiyomizu-dera Temple</strong> &middot; the iconic wooden terrace overlooking the city</div></div>
+      <div class="tl-item highlight"><div class="tl-time">6:00 PM</div><div class="tl-desc"><strong>GEAR</strong> &middot; non-verbal performance in central Kyoto</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 8 -->
+<div class="day-card" id="day-8">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--hiroshima)">D8</div>
+    <div class="day-titles">
+      <h2>Fushimi Inari &amp; Hiroshima Day Trip</h2>
+      <div class="day-date">Monday, June 8</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--hiroshima)">Kyoto + Hiroshima</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">Early morning</div><div class="tl-desc"><strong>Fushimi Inari Shrine</strong> &middot; the iconic orange torii tunnel before crowds</div></div>
+      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Shinkansen Kyoto &rarr; Hiroshima</strong> &middot; ~1h 35min</div></div>
+      <div class="tl-item highlight"><div class="tl-time">Midday</div><div class="tl-desc"><strong>Hiroshima Peace Museum</strong> &middot; ~2.5 hours</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Shinkansen Hiroshima &rarr; Kyoto</strong> &middot; back for the evening</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 9 -->
+<div class="day-card" id="day-9">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--tokyo)">D9</div>
+    <div class="day-titles">
+      <h2>Back to Tokyo &middot; Odaiba</h2>
+      <div class="day-date">Tuesday, June 9</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--tokyo)">Tokyo</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Shinkansen Kyoto &rarr; Tokyo</strong> &middot; ~2h 15min</div></div>
+      <div class="tl-item highlight"><div class="tl-time">Afternoon</div><div class="tl-desc"><strong>Odaiba</strong> &middot; Miraikan science museum, the life-size Gundam, Tokyo Joypolis arcade, Rainbow Bridge views</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+<!-- DAY 10 -->
+<div class="day-card" id="day-10">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--flight)">D10</div>
+    <div class="day-titles">
+      <h2>Fly home</h2>
+      <div class="day-date">Wednesday, June 10</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--flight)">Flight</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Skyliner</strong> from Ikebukuro to Narita</div></div>
+      <div class="tl-item highlight"><div class="tl-time">10:30 AM</div><div class="tl-desc"><strong>ZIPAIR ZG016</strong> &middot; Tokyo Narita &rarr; Houston IAH</div><div class="tl-note">Arrive 8:25 AM same calendar day &middot; gain the day back</div></div>
+    </div>
+    <div class="journal"><!-- JOURNAL --></div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  Last updated April 27, 2026
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <img src="" alt="">
+</div>
+
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  document.addEventListener('click', (e) => {
+    if (e.target.matches('.gallery img')) {
+      lbImg.src = e.target.src;
+      lb.classList.add('open');
+    } else if (e.target === lb || e.target === lbImg) {
+      lb.classList.remove('open');
+      lbImg.src = '';
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { lb.classList.remove('open'); lbImg.src = ''; }
+  });
+</script>
+
+</body>
+</html>
