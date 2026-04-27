@@ -267,6 +267,41 @@
   }
   .journal .gallery.wide img { aspect-ratio: 4 / 3; }
 
+  /* RECAP STATES (applied when a day flips from upcoming to complete) */
+  .day-card.complete {
+    border-top: 3px solid #2c8a4a;
+  }
+  .recap-pill {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2c8a4a;
+    background: rgba(44, 138, 74, 0.12);
+    border-radius: 999px;
+    vertical-align: 3px;
+    letter-spacing: 0.3px;
+  }
+  .now-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 4px 20px;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .now-divider::before,
+  .now-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
   /* LIGHTBOX */
   .lightbox {
     position: fixed;

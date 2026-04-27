@@ -60,8 +60,8 @@ If Justin spreads photos across multiple messages in the same update ("oh, one m
 1. **Identify the day** by date (e.g., "we just landed in Tokyo" → Day 2). Day numbers and dates are fixed in `index.html`.
 2. **Extract and save photos** to `photos/dayN/` using the snippet in the section above. Files land as `img1.jpg`, `img2.jpg`, ... in the order he sent them. Don't crop, rotate, or recompress.
 3. **Mark the day complete** in `index.html` — three coordinated edits below.
-4. **Move the `.now-divider`** so it sits right before the first upcoming day.
-5. **Update the footer date** to today's date (Central Time): `TZ=America/Chicago date "+%B %d, %Y"`.
+4. **Move (or, on the first day, create) the `.now-divider`** so it sits right before the first upcoming day.
+5. **Update the footer date** to today's date (Central Time): `TZ=America/Chicago date "+%B %d, %Y"`. Skip if the footer already shows today.
 6. **Commit and push.** Pages rebuilds automatically.
 
 ## The three coordinated edits to mark Day N complete
@@ -118,13 +118,13 @@ For 1–4 photos, default `class="gallery"` (square crop, ~140px min). For mostl
 
 ## The "Upcoming" divider
 
-There's exactly one `.now-divider` on the page. It sits between the last completed day and the first upcoming day:
+Once at least one day is complete there's exactly one `.now-divider` on the page. It sits between the last completed day and the first upcoming day:
 
 ```html
 <div class="now-divider"><span class="label">Upcoming</span></div>
 ```
 
-After marking a day complete, cut and paste this divider so it appears right BEFORE the first upcoming day's `<!-- DAY N+1 -->` comment. If every day is complete (end of trip), delete the divider entirely. If no day is complete yet, the divider sits before Day 1 — but in practice, by the time you're updating, at least one day is done.
+Pre-trip the divider doesn't exist. When marking the **first** day complete, add it right before the next day's `<!-- DAY N+1 -->` comment. For every day after that, cut and paste the existing one so it appears right BEFORE the first upcoming day's comment. If every day is complete (end of trip), delete the divider entirely.
 
 ## Tone for journal entries
 
