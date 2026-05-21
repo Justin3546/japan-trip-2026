@@ -106,6 +106,13 @@ with:
 ```html
 <div class="journal">
   <p class="entry">[Justin's text — see tone notes below]</p>
+  <div class="video-embed">                                  <!-- OPTIONAL, only if Justin sent a YouTube link -->
+    <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+            title="Day N recap"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+  </div>
   <div class="gallery">
     <img src="photos/dayN/img1.jpg" alt="">
     <img src="photos/dayN/img2.jpg" alt="">
@@ -115,6 +122,25 @@ with:
 ```
 
 For 1–4 photos, default `class="gallery"` (square crop, ~140px min). For mostly landscape shots or fewer photos, use `class="gallery wide"` (4:3 crop, ~220px min).
+
+### Handling a YouTube link
+
+If Justin's day update includes a YouTube URL (he'll usually just paste it on its own line, sometimes prefixed with "Video:"), drop in the `.video-embed` block shown above, BETWEEN the `<p class="entry">` and the `<div class="gallery">`. If there's no video link, omit the `.video-embed` block entirely — don't leave an empty container.
+
+Extract the 11-character video ID from any of these URL shapes:
+
+- `https://youtu.be/<ID>` → ID is the path
+- `https://youtu.be/<ID>?si=...` → strip query string, ID is the path
+- `https://www.youtube.com/watch?v=<ID>` → ID is the `v` parameter
+- `https://www.youtube.com/watch?v=<ID>&t=10s` → still the `v` parameter, strip the rest
+- `https://www.youtube.com/embed/<ID>` → already in embed form, use as-is
+- `https://youtube.com/shorts/<ID>` → ID is the last path segment (treat the same as a normal video)
+
+Then plug it into `https://www.youtube-nocookie.com/embed/<ID>` (the privacy-enhanced embed domain — same playback, no cookies until user interacts, slightly more permissive with origin checks). Do NOT keep `?si=`, `?t=`, `&list=`, or any other params — the bare embed URL is fine and avoids referrer/playlist surprises.
+
+If Justin sends a video link in a follow-up message AFTER the day is already complete ("oh, here's the Day 3 video"), add only the `.video-embed` block to that day's existing journal (between entry and gallery), keep everything else, and commit with `Day N journal: add video`.
+
+If the URL doesn't match any of the shapes above (Vimeo, Instagram, raw .mp4, etc.), don't guess — ask Justin to re-send.
 
 ## The "Upcoming" divider
 
@@ -155,7 +181,8 @@ Examples: `Day 1 journal: flight out, salmon hit`, `Day 6 journal: USJ start to 
 - [ ] Summary pill has `complete` class
 - [ ] Day card has `complete` class
 - [ ] Recap pill added next to title
-- [ ] Journal block populated with caption + gallery
+- [ ] Journal block populated with caption + (optional video) + gallery
+- [ ] If a YouTube link was sent, video ID extracted and `.video-embed` added between entry and gallery
 - [ ] `.now-divider` moved to before the next upcoming day
 - [ ] Footer date updated
 - [ ] `git push` ran cleanly

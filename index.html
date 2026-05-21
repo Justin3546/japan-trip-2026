@@ -248,6 +248,23 @@
     margin-bottom: 12px;
   }
   .journal .entry + .entry { margin-top: -4px; }
+  .journal .video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .journal .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .journal .video-embed + .gallery { margin-top: 10px; }
   .journal .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
