@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
+<title>Japan 2026 — Smoke Test</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+  :root {
+    --white: #ffffff;
+    --bg: #f7f7f7;
+    --text-primary: #222222;
+    --text-secondary: #6a6a6a;
+    --text-tertiary: #929292;
+    --rausch: #ff385c;
+    --border: #dddddd;
+    --border-light: #ebebeb;
+    --surface: #f2f2f2;
+    --card-shadow: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
+    --tokyo: #4ea8de;
+    --osaka: #f9a03f;
+    --kyoto: #5eaa5e;
+    --flight: #ff385c;
+    --hiroshima: #9b6fbf;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', 'Noto Sans JP', -apple-system, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.43;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--white);
+    padding: 48px 64px 40px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.44px;
+    line-height: 1.2;
+  }
+  .hero h1 .flag { margin-right: 8px; }
+  .hero-meta {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  /* QUICK SUMMARY */
+  .summary-section {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-light);
+    padding: 24px 64px 28px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .summary-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .summary-item:hover {
+    background: var(--surface);
+    transform: translateY(-1px);
+  }
+  .summary-item.complete {
+    background: #f0f0f0;
+    opacity: 0.65;
+  }
+  .summary-item.complete .summary-text { color: var(--text-secondary); }
+  .summary-item.complete::after {
+    content: "\2713";
+    margin-left: auto;
+    color: var(--text-tertiary);
+    font-weight: 700;
+    font-size: 13px;
+    align-self: center;
+  }
+  .summary-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .summary-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .summary-text .day-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    display: block;
+    margin-bottom: 1px;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 64px 80px;
+  }
+
+  /* DAY CARDS */
+  .day-card {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px 0;
+  }
+  .day-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .day-titles h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.18px;
+    line-height: 1.2;
+  }
+  .day-titles .day-date {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .day-city-tag {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    color: var(--white);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .day-body {
+    padding: 20px 32px 28px;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border-light);
+    border-radius: 1px;
+  }
+  .tl-item {
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -19px;
+    top: 7px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .tl-item.highlight::before {
+    background: var(--rausch);
+    box-shadow: 0 0 0 3px rgba(255,56,92,0.15);
+  }
+  .tl-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    margin-bottom: 2px;
+  }
+  .tl-desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+  .tl-desc strong {
+    font-weight: 600;
+  }
+  .tl-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* JOURNAL (added during/after the trip) */
+  .journal:empty { display: none; }
+  .journal {
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border);
+  }
+  .journal .entry {
+    font-size: 14.5px;
+    color: var(--text-primary);
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .journal .entry + .entry { margin-top: -4px; }
+  .journal .video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-top: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .journal .video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .journal .video-embed + .gallery { margin-top: 10px; }
+  .journal .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .journal .gallery img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    background: var(--surface);
+    cursor: zoom-in;
+  }
+  .journal .gallery.wide {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .journal .gallery.wide img { aspect-ratio: 4 / 3; }
+
+  /* RECAP STATES (applied when a day flips from upcoming to complete) */
+  .day-card.complete {
+    border-top: 3px solid #2c8a4a;
+  }
+  .recap-pill {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2c8a4a;
+    background: rgba(44, 138, 74, 0.12);
+    border-radius: 999px;
+    vertical-align: 3px;
+    letter-spacing: 0.3px;
+  }
+  .now-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 4px 20px;
+    color: var(--text-tertiary);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .now-divider::before,
+  .now-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: zoom-out;
+    padding: 24px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 24px 64px 40px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-light);
+    background: var(--white);
+  }
+
+  @media (max-width: 720px) {
+    .hero { padding: 32px 20px 28px; }
+    .hero h1 { font-size: 26px; }
+    .summary-section { padding: 20px 20px 24px; }
+    .summary-grid { grid-template-columns: 1fr 1fr; }
+    .main { padding: 28px 16px 60px; }
+    .day-header { padding: 20px 20px 0; flex-wrap: wrap; }
+    .day-body { padding: 16px 20px 24px; }
+    .day-city-tag { margin-left: 0; }
+    .footer { padding: 24px 20px 32px; }
+  }
+
+  /* Smoke-test only — clearly marks this page as not real */
+  .smoke-banner {
+    background: #fff8e1;
+    border-bottom: 1px solid #f0d97a;
+    padding: 10px 64px;
+    font-size: 13px;
+    color: #7a5d00;
+  }
+  .smoke-banner code {
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="smoke-banner">
+  <strong>End-to-end smoke test.</strong> This page is not part of the real trip journal.
+  Video ID: <code>y_ecCDqTSJs</code>
+</div>
+
+<div class="hero">
+  <h1><span class="flag">🇯🇵</span>Japan 2026 — Smoke Test</h1>
+  <div class="hero-meta">Verifying the daily-update flow works end-to-end</div>
+</div>
+
+<div class="main">
+
+<div class="day-card complete" id="day-0">
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--tokyo)">D0</div>
+    <div class="day-titles">
+      <h2>Smoke Test<span class="recap-pill">&#10003; Recap</span></h2>
+      <div class="day-date">End-to-end test of the post flow</div>
+    </div>
+    <div class="day-city-tag" style="background:var(--tokyo)">Test</div>
+  </div>
+  <div class="day-body">
+    <div class="timeline">
+      <div class="tl-item highlight"><div class="tl-time">Morning</div><div class="tl-desc"><strong>Sample timeline item</strong> &middot; placed here so the journal sits in its real context</div></div>
+      <div class="tl-item"><div class="tl-time">Afternoon</div><div class="tl-desc">Second timeline item to verify spacing</div></div>
+    </div>
+    <div class="journal">
+      <p class="entry">If you can see this page on japan.jconstant.com/test.html, the publish pipeline works. If the video below plays cleanly and the photo placeholders sit beneath it with the right spacing, the daily-update flow is ready for the trip.</p>
+      <p class="entry">Second paragraph to verify multi-paragraph captions render with the tighter spacing rule between entries.</p>
+      <div class="video-embed">
+        <iframe src="https://www.youtube-nocookie.com/embed/y_ecCDqTSJs"
+                title="Smoke test recap"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe>
+      </div>
+      <div class="gallery">
+        <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20200%20200%27%3E%3Crect%20width%3D%27200%27%20height%3D%27200%27%20fill%3D%27%23ff385c%27/%3E%3Ctext%20x%3D%27100%27%20y%3D%27110%27%20text-anchor%3D%27middle%27%20font-family%3D%27sans-serif%27%20font-size%3D%2728%27%20fill%3D%27white%27%3EPhoto%201%3C/text%3E%3C/svg%3E" alt="">
+        <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20200%20200%27%3E%3Crect%20width%3D%27200%27%20height%3D%27200%27%20fill%3D%27%234ea8de%27/%3E%3Ctext%20x%3D%27100%27%20y%3D%27110%27%20text-anchor%3D%27middle%27%20font-family%3D%27sans-serif%27%20font-size%3D%2728%27%20fill%3D%27white%27%3EPhoto%202%3C/text%3E%3C/svg%3E" alt="">
+        <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20200%20200%27%3E%3Crect%20width%3D%27200%27%20height%3D%27200%27%20fill%3D%27%23f9a03f%27/%3E%3Ctext%20x%3D%27100%27%20y%3D%27110%27%20text-anchor%3D%27middle%27%20font-family%3D%27sans-serif%27%20font-size%3D%2728%27%20fill%3D%27white%27%3EPhoto%203%3C/text%3E%3C/svg%3E" alt="">
+        <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20200%20200%27%3E%3Crect%20width%3D%27200%27%20height%3D%27200%27%20fill%3D%27%235eaa5e%27/%3E%3Ctext%20x%3D%27100%27%20y%3D%27110%27%20text-anchor%3D%27middle%27%20font-family%3D%27sans-serif%27%20font-size%3D%2728%27%20fill%3D%27white%27%3EPhoto%204%3C/text%3E%3C/svg%3E" alt="">
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div style="text-align: center; padding: 32px 16px 48px; color: #929292; font-size: 12px;">
+  Generated by <code>japan-post-smoketest</code>. After verification, run <code>cleanup.py</code> to remove this page.
+</div>
+
+</body>
+</html>
