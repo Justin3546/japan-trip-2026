@@ -613,6 +613,12 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { lb.classList.remove('open'); lbImg.src = ''; }
   });
+
+  // Land returning visitors on the newest recap, unless they followed a #day-N deep link.
+  if (!location.hash) {
+    const done = document.querySelectorAll('.day-card.complete');
+    if (done.length) done[done.length - 1].scrollIntoView();
+  }
 </script>
 
 </body>
