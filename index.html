@@ -338,6 +338,29 @@
     border-radius: 8px;
   }
 
+  /* MAP */
+  .map-section {
+    background: var(--white);
+    border-bottom: 1px solid var(--border-light);
+    padding: 24px 64px 28px;
+  }
+  .map-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+  }
+  .map-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
   /* FOOTER */
   .footer {
     text-align: center;
@@ -353,6 +376,7 @@
     .hero h1 { font-size: 26px; }
     .summary-section { padding: 20px 20px 24px; }
     .summary-grid { grid-template-columns: 1fr 1fr; }
+    .map-section { padding: 20px 20px 24px; }
     .main { padding: 28px 16px 60px; }
     .day-header { padding: 20px 20px 0; flex-wrap: wrap; }
     .day-body { padding: 16px 20px 24px; }
@@ -382,6 +406,17 @@
     <a class="summary-item" href="#day-8"><div class="summary-dot" style="background:var(--hiroshima)"></div><div class="summary-text"><span class="day-label">Day 8 &middot; Mon Jun 8</span>Fushimi Inari &middot; Hiroshima day trip</div></a>
     <a class="summary-item" href="#day-9"><div class="summary-dot" style="background:var(--tokyo)"></div><div class="summary-text"><span class="day-label">Day 9 &middot; Tue Jun 9</span>Back to Tokyo &middot; Odaiba</div></a>
     <a class="summary-item" href="#day-10"><div class="summary-dot" style="background:var(--flight)"></div><div class="summary-text"><span class="day-label">Day 10 &middot; Wed Jun 10</span>Fly NRT &rarr; IAH</div></a>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="map-embed">
+    <iframe src="https://www.google.com/maps/d/embed?mid=10ccHU7_L1wxH9XL6XLx2tfa0bGj7kg0&ehbc=2E312F&noprof=1"
+            title="Japan 2026 trip map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
   </div>
 </div>
 
