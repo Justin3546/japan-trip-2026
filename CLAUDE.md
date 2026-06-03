@@ -2,6 +2,8 @@
 
 This is a public single-page site for friends/family to follow our June 2026 Japan trip. During the trip, Justin will send photos and a short text recap for each day; you (Claude) update `index.html` so the day flips from "upcoming" to "recap."
 
+> **Always merge to `main`.** Every change must land on `main` — commit and push directly to `main` (or, if you worked on a branch, merge it into `main`) before you finish. GitHub Pages builds from `main`, so nothing is live until it's there. Never leave work stranded on a `claude/*` or feature branch.
+
 ## Environment
 
 You're running in a **Claude Code remote cloud session** bound to this repo, which Justin starts from the Claude app on his phone. The repo is already your working directory, git is configured, and `gh` is authenticated. The shell is Linux — no macOS-only tools (`sips`, etc.).
